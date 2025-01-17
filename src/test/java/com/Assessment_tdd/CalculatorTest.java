@@ -24,6 +24,7 @@ class CalculatorTest {
 
     @Test
     void additionForMultipleInput() {
+        Assertions.assertThat(Calculator.add("2,5,3")).isEqualTo(10);
     }
 
     @Test

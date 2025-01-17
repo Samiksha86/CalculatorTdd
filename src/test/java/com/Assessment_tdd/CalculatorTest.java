@@ -19,6 +19,7 @@ class CalculatorTest {
 
     @Test
     void additionForTwoInput() {
+        Assertions.assertThat(Calculator.add("2,5")).isEqualTo(7);
     }
 
     @Test

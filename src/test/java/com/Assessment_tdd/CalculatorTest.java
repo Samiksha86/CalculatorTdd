@@ -38,6 +38,9 @@ class CalculatorTest {
 
     @Test
     void additionForNegative() {
+        Assertions.assertThatThrownBy(() -> Calculator.add("1,-5,4,6,-3"))
+                .hasMessageContaining("Negatives not allowed")
+                .hasMessageContaining("-5, -3");
     }
 
 }

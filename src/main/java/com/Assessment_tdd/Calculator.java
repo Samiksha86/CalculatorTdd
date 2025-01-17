@@ -7,21 +7,19 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Calculator {
-
     public static int add(String string) {
-        if(!string.isEmpty()) {
-            List<Integer> list = strArrayToIntList(getSplit(string));
-
-			negatives(list);
-            return list.stream().reduce(Integer::sum).orElseThrow();
+        if (string.isEmpty()) {
+            return 0;
         }
-        return 0;
 
+        List<Integer> list = strArrayToIntList(getSplit(string));
+        negatives(list);
+        return list.stream().reduce(0, Integer::sum);
     }
 
     private static void negatives(List<Integer> list) {
         List<Integer> negativeNumbers = list.stream()
-                .filter(num -> num < 0) // Filter negative numbers
+                .filter(num -> num < 0)
                 .collect(Collectors.toList());
 
         if (!negativeNumbers.isEmpty()) {
@@ -29,9 +27,11 @@ public class Calculator {
         }
     }
 
-
     private static List<Integer> strArrayToIntList(String[] strArray) {
-        return Arrays.stream(strArray).map(Integer::parseInt).collect(Collectors.toList());
+        return Arrays.stream(strArray)
+                .filter(s -> !s.isEmpty())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 
     private static String[] getSplit(String string) {
@@ -40,9 +40,10 @@ public class Calculator {
             if (matcher.matches()) {
                 String delimiter = matcher.group(1);
                 String toSplit = matcher.group(2);
-                return toSplit.split(Pattern.quote(delimiter));
+                // Split using custom delimiter OR comma OR newline
+                return toSplit.split("[" + Pattern.quote(delimiter) + ",\n]");
             }
         }
-        return string.split(",|\n");
+        return string.split("[,\n]");
     }
 }

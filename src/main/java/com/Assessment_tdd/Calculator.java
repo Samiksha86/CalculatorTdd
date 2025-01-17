@@ -12,12 +12,12 @@ public class Calculator {
             return 0; // Return 0 if the input string is null or empty
         }
 
-        List<Integer> numbers = Arrays.stream(string.split(","))
-                .map(Integer::parseInt) // Convert each string to an integer
+        List<Integer> numbers = Arrays.stream(string.split(",|\n")) // Split by ',' or '\n'
+                .map(Integer::parseInt) // Convert each part to an integer
                 .collect(Collectors.toList());
 
         return numbers.stream()
-                .reduce(0, Integer::sum); // Sum all the integers in the list
+                .reduce(0, Integer::sum); // Sum up all integers
     }
 
 }
